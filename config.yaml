@@ -1,0 +1,2 @@
+sample_file: "samples_info.tab"
+genome: "/gpfs/data/fisherlab/genomes/hg38/bowtie2/hg38_index"

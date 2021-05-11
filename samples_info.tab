@@ -1,0 +1,3 @@
+File_Name_R1	File_Name_R2	Sample	Condition	Replicate	Antibody	Sample_name
+3_R1_001.fastq.gz	3_R2_001.fastq.gz	Sample_1	Control	1	Antibody	Sample_1_Control_1_Antibody
+15_R1_001.fastq.gz	15_R2_001.fastq.gz	Sample_1	Control	1	Control	Sample_1_Control_1_Control

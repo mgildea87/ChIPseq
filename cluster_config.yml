@@ -1,0 +1,48 @@
+# cluster configuration
+fastqc:
+  Job_name: Fastqc # -J
+  Mem: 10000 # --mem
+  Cores: 1 #-c
+  Partition: cpu_short # -p
+  Time: 240 # -t
+  Error: logs/slurm_reports/slurm-%j.out # -e
+
+trim:
+  Job_name: trim # -J
+  Mem: 5000 # --mem
+  Partition: cpu_short # -p
+  Cores: 4 #-c
+  Time: 240 # -t
+  Error: logs/slurm_reports/slurm-%j.out # -e
+
+align:
+  Job_name: align # -J
+  Mem: 60000 # --mem
+  Partition: cpu_short # -p
+  Cores: 20 #-c
+  Time: 240 # -t
+  Error: logs/slurm_reports/slurm-%j.out # -e
+
+MACS2:
+  Job_name: MACS2 # -J
+  Mem: 60000 # --mem
+  Partition: cpu_short # -p
+  Cores: 20 #-c
+  Time: 60 # -t
+  Error: logs/slurm_reports/slurm-%j.out # -e
+
+fragment_size:
+  Job_name: fragment_size # -J
+  Mem: 60000 # --mem
+  Partition: cpu_short # -p
+  Cores: 1 #-c
+  Time: 60 # -t
+  Error: logs/slurm_reports/slurm-%j.out # -e
+
+FRP:
+  Job_name: FRP # -J
+  Mem: 60000 # --mem
+  Partition: cpu_short # -p
+  Cores: 1 #-c
+  Time: 60 # -t
+  Error: logs/slurm_reports/slurm-%j.out # -e
