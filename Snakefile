@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-for directory in ['fastqc', 'trim', 'logs', 'logs/slurm_reports', 'logs/trim_reports', 'alignment', 'alignment/frag_len', 'logs/alignment_reports', 'peaks', 'logs/MACS2']:
+for directory in ['fastqc', 'fastqc_post_trim', 'trim', 'logs', 'logs/slurm_reports', 'logs/trim_reports', 'alignment', 'alignment/frag_len', 'logs/alignment_reports', 'peaks', 'logs/MACS2']:
 	if not os.path.isdir(directory):
 		os.mkdir(directory)
 
@@ -31,6 +31,7 @@ read = ['_R1', '_R2']
 rule all:
 	input:
 		expand('fastqc/{sample_file}{read}_fastqc.html', sample_file = sample_ids_file, read = read),
+		expand('fastqc_post_trim/{sample_file}_trimmed{read}_fastqc.html', sample_file = sample_ids_file, read = read),
 		expand('peaks/{sample}_peaks.narrowPeak', sample = sample_ids),
 		'FRP.txt',
 		expand('alignment/frag_len/{sample}.txt', sample = sample_ids_file)
@@ -42,6 +43,16 @@ rule fastqc:
 		"fastqc/{sample}{read}_fastqc.html",
 	params:
 		'fastqc/'
+	shell: 
+		'fastqc {input.fastq} -o {params}'
+
+rule fastqc_post_trim:
+	input: 
+		fastq = "trim/{sample}{read}.fastq.gz"
+	output:  
+		"fastqc_post_trim/{sample}{read}_fastqc.html",
+	params:
+		'fastqc_post_trim/'
 	shell: 
 		'fastqc {input.fastq} -o {params}'
 
@@ -72,7 +83,7 @@ rule align:
 	log:
 		'logs/alignment_reports/{sample}.log'
 	params:
-		'--end-to-end --very-sensitive --no-mixed --no-unal --no-discordant --phred33 -I 10 -X 700'
+		'--end-to-end --very-sensitive --no-mixed --no-unal --no-discordant --phred33'
 	shell:
 		'bowtie2 {params} -x %s --threads {threads} -1 {input.R1} -2 {input.R2} 2> {log} | samtools view -bh -q 3 > alignment/{wildcards.sample}.bam' % (genome)
 
@@ -85,7 +96,7 @@ rule MACS2:
   	log:
   		'logs/MACS2/{sample}.log'
   	params:
-  		'-B --outdir peaks/ -g 2.7e9 -q 0.05'
+  		'-B --outdir peaks/ -g 2.7e9 -q 0.05 --keep-dup auto'
   	shell:
   		'macs2 callpeak -t {input.exp} -c {input.con} {params} -n {wildcards.sample} 2> {log}'
 

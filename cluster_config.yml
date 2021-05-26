@@ -7,6 +7,14 @@ fastqc:
   Time: 240 # -t
   Error: logs/slurm_reports/slurm-%j.out # -e
 
+fastqc_post_trim:
+  Job_name: Fastqc_post_trim # -J
+  Mem: 10000 # --mem
+  Cores: 1 #-c
+  Partition: cpu_short # -p
+  Time: 240 # -t
+  Error: logs/slurm_reports/slurm-%j.out # -e
+
 trim:
   Job_name: trim # -J
   Mem: 5000 # --mem
@@ -17,6 +25,14 @@ trim:
 
 align:
   Job_name: align # -J
+  Mem: 60000 # --mem
+  Partition: cpu_short # -p
+  Cores: 20 #-c
+  Time: 240 # -t
+  Error: logs/slurm_reports/slurm-%j.out # -e
+
+sort:
+  Job_name: sort # -J
   Mem: 60000 # --mem
   Partition: cpu_short # -p
   Cores: 20 #-c
