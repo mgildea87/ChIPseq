@@ -34,6 +34,7 @@ rule all:
 		expand('fastqc_post_trim/{sample_file}_trimmed{read}_fastqc.html', sample_file = sample_ids_file, read = read),
 		expand('peaks/{sample}_peaks.narrowPeak', sample = sample_ids),
 		'FRP.txt',
+		expand('alignment/{sample}_sorted.bam', sample = sample_ids_file),
 		expand('alignment/frag_len/{sample}.txt', sample = sample_ids_file)
 
 rule fastqc:
@@ -86,6 +87,15 @@ rule align:
 		'--end-to-end --very-sensitive --no-mixed --no-unal --no-discordant --phred33'
 	shell:
 		'bowtie2 {params} -x %s --threads {threads} -1 {input.R1} -2 {input.R2} 2> {log} | samtools view -bh -q 3 > alignment/{wildcards.sample}.bam' % (genome)
+
+rule sort:
+	input:
+		'alignment/{sample}.bam'
+	output:
+		'alignment/{sample}_sorted.bam'	
+	threads: 40
+	shell:
+		'samtools sort -@ {threads} {input} > {output}'
 
 rule MACS2:
   	input:
