@@ -39,6 +39,14 @@ sort:
   Time: 240 # -t
   Error: logs/slurm_reports/slurm-%j.out # -e
 
+index:
+  Job_name: index # -J
+  Mem: 60000 # --mem
+  Partition: cpu_short # -p
+  Cores: 20 #-c
+  Time: 240 # -t
+  Error: logs/slurm_reports/slurm-%j.out # -e
+
 MACS2:
   Job_name: MACS2 # -J
   Mem: 60000 # --mem
