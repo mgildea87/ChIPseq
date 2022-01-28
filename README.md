@@ -50,4 +50,4 @@ When starting a new project:
 		5. Update config.yaml with path to genome and feature file (if needed. The default right now is mm10)
 		6. Update cluster_config.yml with job desired specifications for each Snakemake rule, if desired.
 		8. Perform a dry run of snakemake with 'snakemake -n -r' to check for errors and this will tell you the number of jobs required. You will need to load the miniconda3/cpu/4.9.2 module and activate the ChIPseq environment first. Dont forget to deactivate the environment and miniconda module before running snakemake_init.sh. This step is not necessary.
-		9. Run 'bash cat_rename_init/snakemake_init.sh' to execute workflow.
+		9. Run 'bash cat_rename_init/snakemake_init.sh -c 'ChIPseq' -w 'ChIPseq' to execute workflow. The -c and -w parameters tell the workflow which conda env to use and which workflow is being executed.
